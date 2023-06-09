@@ -33,18 +33,18 @@ public class CharacterControl : MonoBehaviour
 
     void Movement()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.touchCount > 0)
+        if (Input.GetKeyDown(KeyCode.Space))// || Input.touchCount > 0)
         {
-            theTouch = Input.GetTouch(0);
-            if (theTouch.phase == TouchPhase.Began)
-            {
+            // theTouch = Input.GetTouch(0);
+            // if (theTouch.phase == TouchPhase.Began)
+            // {
                 if (newSpeed == 0.0f)   
                 { 
                     newSpeed = speed;
                 }
                 else 
                     newSpeed *= -1; 
-            }
+            //}
         }
         angle += newSpeed * Time.deltaTime;
         float radians = angle * Mathf.Deg2Rad;

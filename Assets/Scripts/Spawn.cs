@@ -6,7 +6,6 @@ using Random = UnityEngine.Random;
 
 public class Spawn : MonoBehaviour
 {
-    // Start is called before the first frame update
     public GameObject enemy;
     public static Spawn instance;
     

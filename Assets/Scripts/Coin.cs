@@ -7,45 +7,35 @@ using Random = UnityEngine.Random;
 
 public class Coin : MonoBehaviour
 {
-    public TextMeshProUGUI Score;
-    private int scoreInt;
-    private int numberEnemy;
-    
-
+    private int _numberEnemy;
     private void Start()
     {
-        scoreInt = 0;
-        numberEnemy = 0;
+        _numberEnemy = 0;
         changePosition();
-    }
-
-    void TakeCoin(int coin)
-    {
-        Score.text = (scoreInt).ToString();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
-            scoreInt += 1;
             changePosition();
-            TakeCoin(1);
+            GameManager.instance.IncreaseScore(1);
 
-            if (scoreInt == (numberEnemy + 1) * (numberEnemy + 1))
+            if (GameManager.instance.GetScore() == (_numberEnemy + 1) * (_numberEnemy + 1))
             {
                 Spawn.instance.SpawnEnemy();
-                numberEnemy += 1;
+                _numberEnemy += 1;
             }
         }
     }
 
-    void changePosition()
+    private void changePosition()
     {
         int angle = 0;
         float distance = 0f;
         float x = 0f;
         float y = 0f;
+        
         while (distance < 2f)
         {
             angle = Random.Range(0, 360);

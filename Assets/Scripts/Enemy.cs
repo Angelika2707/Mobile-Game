@@ -7,45 +7,51 @@ using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
-    // Start is called before the first frame update
     public float speed;
-    private Vector3 direction;
-    private float x, y;
-    private Rigidbody2D rb;
-    private Vector3 LastVelocity;
-    private Vector3 smoothVelocity;
+    private Vector3 _direction, _LastVelocity, _smoothVelocity;
+    private Rigidbody2D _rb;
     
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        x = Random.Range(-0.4f, 0.4f);
-        y = 1f;
-        direction = new Vector3(x, y, 0).normalized;
+        _rb = GetComponent<Rigidbody2D>();
+        SetNewRandomDirection();
         Invoke("TurnOnCollider", 1f);
+    }
+
+    void SetNewRandomDirection()
+    {
+        float x = Random.Range(-0.4f, 0.4f);
+        float y = 1f;
+        _direction = new Vector3(x, y, 0).normalized;
     }
 
     void Update()
     {
-        LastVelocity = rb.velocity;
+        _LastVelocity = _rb.velocity;
     }
 
     void FixedUpdate()
     {
-        rb.velocity = direction * speed;
+        _rb.velocity = _direction * speed;
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene(0);
+            GameManager.instance.EndGame();
         }
-        direction = Vector3.Reflect(LastVelocity.normalized, other.GetContact(0).normal);
-        rb.velocity = direction * speed;
+        Rebound(other);
     }
 
     void TurnOnCollider()
     {
         GetComponent<CircleCollider2D>().enabled = true;
+    }
+
+    void Rebound(Collision2D other)
+    {
+        _direction = Vector3.Reflect(_LastVelocity.normalized, other.GetContact(0).normal);
+        _rb.velocity = _direction * speed;
     }
 }
