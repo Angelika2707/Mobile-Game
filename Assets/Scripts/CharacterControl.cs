@@ -6,16 +6,15 @@ using UnityEngine;
 public class CharacterControl : MonoBehaviour
 {
     public float speed;
+    public float newSpeed = 0.0f;
     public float radius;
     private float angle = 90.0f;
-    private float newSpeed = 0.0f;
     private Touch theTouch;
 
     public static CharacterControl mainCharacter = null;
 
     private void Start()
     {
-        
         if (mainCharacter == null)
         {
             mainCharacter = this;
@@ -33,19 +32,6 @@ public class CharacterControl : MonoBehaviour
 
     void Movement()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.touchCount > 0)
-        {
-            theTouch = Input.GetTouch(0);
-            if (theTouch.phase == TouchPhase.Began)
-            {
-                if (newSpeed == 0.0f)   
-                { 
-                    newSpeed = speed;
-                }
-                else 
-                    newSpeed *= -1; 
-            }
-        }
         angle += newSpeed * Time.deltaTime;
         float radians = angle * Mathf.Deg2Rad;
 
@@ -53,5 +39,13 @@ public class CharacterControl : MonoBehaviour
         float y = Mathf.Sin(radians) * radius;
 
         transform.position = new Vector3(x, y, transform.position.z);
+    }
+
+    public void ChangeDirection()
+    {
+        if (newSpeed == 0.0f)
+            newSpeed = speed;
+        else
+            newSpeed *= -1;
     }
 }
