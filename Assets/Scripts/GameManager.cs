@@ -9,10 +9,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public TextMeshProUGUI Score;
-    //public bool endGame;
-    
-    private int _scoreInt;
-    private int _numberEnemy;
     void Awake()
     {
         if (instance != null && instance != this) 
@@ -27,8 +23,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        _scoreInt = 0;
-        _numberEnemy = 0;
         enabled = false;
     }
     
@@ -44,6 +38,27 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
+        if (!PlayerPrefs.HasKey("score"))
+            SaveScore(GetScore());
+        else
+        {
+            if (PlayerPrefs.GetInt("score") < GetScore())
+            {
+                SaveScore(GetScore());
+            }
+        }
         SceneManager.LoadScene(0);
+    }
+
+    public void SaveScore(int score)
+    {
+        PlayerPrefs.SetInt("score", score);
+    }
+
+    public int GetSaveScore()
+    {
+        if (PlayerPrefs.HasKey("score"))
+            return PlayerPrefs.GetInt("score");
+        return 0;
     }
 }
