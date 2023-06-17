@@ -8,22 +8,8 @@ public class CharacterControl : MonoBehaviour
     public float speed;
     public float newSpeed = 0.0f;
     public float radius;
-    private float angle = 90.0f;
-    private Touch theTouch;
+    private float _angle = 90.0f;
 
-    public static CharacterControl mainCharacter = null;
-
-    private void Start()
-    {
-        if (mainCharacter == null)
-        {
-            mainCharacter = this;
-        }
-        else if (mainCharacter == this)
-        {
-            Destroy(gameObject);
-        }
-    }
 
     void Update()
     {
@@ -32,8 +18,8 @@ public class CharacterControl : MonoBehaviour
 
     void Movement()
     {
-        angle += newSpeed * Time.deltaTime;
-        float radians = angle * Mathf.Deg2Rad;
+        _angle += newSpeed * Time.deltaTime;
+        float radians = _angle * Mathf.Deg2Rad;
 
         float x = Mathf.Cos(radians) * radius;
         float y = Mathf.Sin(radians) * radius;
@@ -43,9 +29,12 @@ public class CharacterControl : MonoBehaviour
 
     public void ChangeDirection()
     {
-        if (newSpeed == 0.0f)
-            newSpeed = speed;
-        else
-            newSpeed *= -1;
+        if (Time.timeScale == 1f)
+        {
+            if (newSpeed == 0.0f)
+                newSpeed = speed;
+            else
+                newSpeed *= -1;
+        }
     }
 }

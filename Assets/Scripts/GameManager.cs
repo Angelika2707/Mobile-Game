@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public AudioSource MusicSource;
     public static GameManager instance;
     public TextMeshProUGUI Score;
     void Awake()
@@ -24,6 +25,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         enabled = false;
+        
+        SettingsManager.instance.LoadSettings();
+        SettingsManager.instance.PlayMusic(MusicSource);
     }
     
     public void IncreaseScore(int number)

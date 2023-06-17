@@ -32,20 +32,13 @@ public class Coin : MonoBehaviour
     private void changePosition()
     {
         int angle = 0;
-        float distance = 0f;
         float x = 0f;
         float y = 0f;
-        
-        while (distance < 2f)
-        {
-            angle = Random.Range(0, 360);
-            float radians = angle * Mathf.Deg2Rad;
-            x = Mathf.Cos(radians) * 2;
-            y = Mathf.Sin(radians) * 2;
 
-            distance = Mathf.Sqrt((x - CharacterControl.mainCharacter.transform.position.x) * (x - CharacterControl.mainCharacter.transform.position.x) +
-                                        (y - CharacterControl.mainCharacter.transform.position.y) * (y - CharacterControl.mainCharacter.transform.position.y));
-        }
+        angle = Random.Range(0, 360);
+        float radians = angle * Mathf.Deg2Rad;
+        x = Mathf.Cos(radians) * 2;
+        y = Mathf.Sin(radians) * 2;
         
         transform.position = new Vector3(x, y, transform.position.z);
         transform.rotation = Quaternion.Euler(0, 0, angle + 90);
