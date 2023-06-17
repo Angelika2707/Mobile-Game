@@ -25,9 +25,9 @@ public class SettingsManager : MonoBehaviour
     public void LoadSettings()
     {
         if (PlayerPrefs.HasKey("Music"))
-        {
             playMusic = PlayerPrefs.GetInt("Music");
-        }
+        else
+            playMusic = 1;
     }
 
     public void PlayMusic(AudioSource MusicSource)
